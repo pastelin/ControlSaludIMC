@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="_csrf" th:content="${_csrf.token}" />
+        <meta name="_csrf_header" th:content="${_csrf.headerName}" />
+        <title>Panel IMC | Control de Salud e IMC</title>
+        <link rel="stylesheet" th:href="@{/css/app.css}" />
+        <script th:src="@{/js/dashboard.js}" defer></script>
+    </head>
+    <body class="dashboard-page">
+        <header class="topbar">
+            <div class="nav-content">
+                <div class="nav-brand"></div>
+                <div class="nav-actions">
+                    <span
+                        >Bienvenido,
+                        <strong th:text="${usuario}">Usuario</strong></span
+                    >
+                    <form th:action="@{/logout}" method="post">
+                        <button class="logout" type="submit">
+                            Cerrar sesión
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </header>
+        <main class="dashboard-container">
+            <div class="welcome">
+                <h1>Control de Salud e IMC</h1>
+                <p>
+                    Registra tus mediciones y visualiza tu progreso en el
+                    tiempo.
+                </p>
+            </div>
+            <div id="globalError" class="alert error" hidden role="alert"></div>
+            <section class="dashboard-grid">
+                <div class="left-column">
+                    <section class="card panel measurement-card">
+                        <div class="section-title">
+                            <span class="circle-icon">＋</span>
+                            <h2>Nueva medición</h2>
+                        </div>
+                        <form id="imcForm">
+                            <label for="peso">Peso (kg)</label>
+                            <input
+                                id="peso"
+                                name="peso"
+                                type="number"
+                                min="0.1"
+                                step="0.01"
+                                required
+                                placeholder="Ejemplo: 70.5"
+                            />
+                            <label for="altura">Estatura (m)</label>
+                            <input
+                                id="altura"
+                                name="estatura"
+                                type="number"
+                                min="1"
+                                max="2.5"
+                                step="0.01"
+                                required
+                                th:value="${estatura}"
+                            />
+                            <button class="primary full" type="submit">
+                                Calcular y guardar
+                            </button>
+                        </form>
+                    </section>
+                    <section class="card panel result-card">
+                        <div class="section-title">
+                            <span class="circle-icon">♡</span>
+                            <h2>Tu resultado</h2>
+                        </div>
+                        <p class="helper" id="resultHint">
+                            Registra una medición para conocer tu IMC.
+                        </p>
+                        <div class="result-badge" id="resultBadge" hidden>
+                            IMC: <span id="resultValue">—</span>
+                        </div>
+                        <p class="result-state" id="resultState"></p>
+                    </section>
+                </div>
+                <section class="card panel history-card">
+                    <div class="section-title">
+                        <span class="circle-icon">↗</span>
+                        <h2>Progreso en el tiempo</h2>
+                    </div>
+                    <div class="table-wrap">
+                        <table aria-label="Histórico del IMC">
+                            <thead>
+                                <tr>
+                                    <th>Fecha</th>
+                                    <th>Peso</th>
+                                    <th>Estatura</th>
+                                    <th>IMC</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody id="historyBody">
+                                <tr>
+                                    <td colspan="5" class="empty">
+                                        Cargando mediciones…
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </section>
+            <section class="extras-grid">
+                <section class="card panel extras-card">
+                    <div class="section-title">
+                        <span class="circle-icon">▤</span>
+                        <h2>Reportes y carpetas</h2>
+                    </div>
+                    <p class="helper">
+                        Guarda una copia CSV de tu historial en una carpeta
+                        personal.
+                    </p>
+                    <div class="compact-controls">
+                        <input
+                            id="folderName"
+                            maxlength="80"
+                            placeholder="Nombre de nueva carpeta"
+                            aria-label="Nombre de la carpeta"
+                        /><button
+                            class="secondary"
+                            id="createFolder"
+                            type="button"
+                        >
+                            Crear carpeta
+                        </button>
+                    </div>
+                    <div class="compact-controls">
+                        <select
+                            id="folderSelect"
+                            aria-label="Carpeta para guardar el reporte"
+                        >
+                            <option value="">Cargando carpetas...</option>
+                        </select>
+                    </div>
+                    <div class="compact-controls">
+                        <input
+                            id="reportName"
+                            maxlength="100"
+                            value="historial-imc"
+                            aria-label="Nombre del reporte"
+                        /><button
+                            class="primary"
+                            id="createReport"
+                            type="button"
+                        >
+                            Generar CSV
+                        </button>
+                    </div>
+                    <ul class="resource-list" id="filesList">
+                        <li class="empty">Sin reportes todavía.</li>
+                    </ul>
+                    <div
+                        id="filesFeedback"
+                        class="feedback"
+                        role="status"
+                    ></div>
+                </section>
+                <section class="card panel extras-card">
+                    <div class="section-title">
+                        <span class="circle-icon">♧</span>
+                        <h2>Notificaciones</h2>
+                    </div>
+                    <p class="helper">Avisos sobre tu cuenta y tus cálculos.</p>
+                    <ul class="resource-list" id="notificationsList">
+                        <li class="empty">Cargando notificaciones…</li>
+                    </ul>
+                </section>
+            </section>
+        </main>
+    </body>
+</html>

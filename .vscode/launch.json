@@ -1,0 +1,14 @@
+{
+	"configurations": [
+		{
+			"type": "java",
+			"name": "Spring Boot-ControlSaludImcApplication<control-salud-imc>",
+			"request": "launch",
+			"cwd": "${workspaceFolder}",
+			"mainClass": "com.tecmilenio.saludimc.ControlSaludImcApplication",
+			"projectName": "control-salud-imc",
+			"args": "",
+			"envFile": "${workspaceFolder}/.env"
+		}
+	]
+}
