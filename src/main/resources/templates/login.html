@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Iniciar sesión | Control de Salud e IMC</title>
+        <link rel="stylesheet" th:href="@{/css/app.css}" />
+    </head>
+    <body class="auth-page">
+        <main class="auth-container">
+            <h1 class="auth-title">Control de Salud e IMC</h1>
+            <section class="card auth-card" aria-label="Inicio de sesión">
+                <h2>Iniciar sesión</h2>
+                <div class="alert error" th:if="${param.error}">
+                    Usuario o contraseña incorrectos.
+                </div>
+                <div class="alert success" th:if="${param.registrado}">
+                    ¡Cuenta creada! Ahora inicia sesión.
+                </div>
+                <div class="alert success" th:if="${param.logout}">
+                    Sesión cerrada correctamente.
+                </div>
+                <form th:action="@{/login}" method="post">
+                    <label for="username">Usuario</label>
+                    <input
+                        id="username"
+                        name="username"
+                        type="text"
+                        required
+                        autocomplete="username"
+                        placeholder="Tu nombre de usuario"
+                        autofocus
+                    />
+                    <label for="password">Contraseña</label>
+                    <input
+                        id="password"
+                        name="password"
+                        type="password"
+                        required
+                        autocomplete="current-password"
+                        placeholder="Tu contraseña"
+                    />
+                    <button class="primary full" type="submit">
+                        Iniciar sesión
+                    </button>
+                </form>
+                <p class="account-prompt">
+                    ¿No tienes cuenta?
+                    <a th:href="@{/registro}">Regístrate aquí</a>
+                </p>
+            </section>
+            
+        </main>
+    </body>
+</html>

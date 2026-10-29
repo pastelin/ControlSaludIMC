@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Registro | Control de Salud e IMC</title>
+        <link rel="stylesheet" th:href="@{/css/app.css}" />
+    </head>
+    <body class="auth-page">
+        <main class="auth-container wide">
+            <h1>Control de Salud e IMC</h1>
+            <p class="subtitle">Crea tu cuenta para comenzar.</p>
+            <section class="card registration-card" aria-label="Registro">
+                <h2>Registro</h2>
+                <p class="helper">
+                    Completa tus datos. Solo necesitas registrarte una vez.
+                </p>
+                <div
+                    class="alert error"
+                    th:if="${mensaje}"
+                    th:text="${mensaje}"
+                ></div>
+                <form
+                    th:action="@{/registro}"
+                    th:object="${registroForm}"
+                    method="post"
+                >
+                    <div class="register-grid">
+                        <fieldset>
+                            <legend>Datos de cuenta</legend>
+                            <label for="nombreCompleto">Nombre completo</label>
+                            <input
+                                id="nombreCompleto"
+                                th:field="*{nombreCompleto}"
+                                maxlength="120"
+                                required
+                                placeholder="Nombre y apellidos"
+                            />
+                            <label for="usuario">Usuario</label>
+                            <input
+                                id="usuario"
+                                th:field="*{usuario}"
+                                minlength="3"
+                                maxlength="50"
+                                pattern="[A-Za-z0-9._-]+"
+                                required
+                                placeholder="Crea un usuario"
+                            />
+                            <label for="contrasena">Contraseña</label>
+                            <input
+                                id="contrasena"
+                                name="contrasena"
+                                type="password"
+                                minlength="8"
+                                maxlength="72"
+                                required
+                                autocomplete="new-password"
+                                placeholder="Mínimo 8 caracteres"
+                            />
+                        </fieldset>
+                        <fieldset>
+                            <legend>Datos físicos</legend>
+                            <label for="edad">Edad (años)</label>
+                            <input
+                                id="edad"
+                                th:field="*{edad}"
+                                type="number"
+                                min="15"
+                                max="120"
+                                required
+                                placeholder="15 o más"
+                            />
+                            <label for="sexo">Sexo</label>
+                            <select id="sexo" th:field="*{sexo}" required>
+                                <option value="">Selecciona una opción</option>
+                                <option value="Femenino">Femenino</option>
+                                <option value="Masculino">Masculino</option>
+                                <option value="Otro">
+                                    Otro / prefiero no especificar
+                                </option>
+                            </select>
+                            <label for="estatura">Estatura (metros)</label>
+                            <input
+                                id="estatura"
+                                th:field="*{estatura}"
+                                type="number"
+                                step="0.01"
+                                min="1"
+                                max="2.5"
+                                required
+                                placeholder="Ejemplo: 1.75"
+                            />
+                            <label for="pesoInicial"
+                                >Peso inicial (kg)
+                                <span class="optional">opcional</span></label
+                            >
+                            <input
+                                id="pesoInicial"
+                                th:field="*{pesoInicial}"
+                                type="number"
+                                step="0.1"
+                                min="0.1"
+                                placeholder="Ejemplo: 70"
+                            />
+                        </fieldset>
+                    </div>
+                    <button class="primary create-button" type="submit">
+                        Crear cuenta
+                    </button>
+                </form>
+                <p class="account-prompt">
+                    ¿Ya tienes una cuenta?
+                    <a th:href="@{/login}">Iniciar sesión</a>
+                </p>
+            </section>
+            <p class="bottom-note">
+                Tus datos se guardan en tu base de datos MySQL local.
+            </p>
+        </main>
+    </body>
+</html>
